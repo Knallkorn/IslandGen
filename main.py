@@ -2,8 +2,25 @@
 
 import tkinter as tk
 import os
+import subprocess
+
+#Init control variables
+
+global size
+global octaves
+global persistance
+global lacunarity
+global thres
 
 #Define events
+
+def enterEvent():
+    size = sizeScale.get()
+    octaves = octavesScale.get()
+    persistance = persistanceScale.get()
+    lacunarity = lacunarityScale.get()
+    thres = thresScale.get()
+    root.destroy()
 
 #Init window
 
@@ -32,7 +49,7 @@ thresScale = tk.Scale(root, from_=0.0, to=1.0, orient=tk.HORIZONTAL, length=150,
 thresScale.set(0.08)
 thresScale.grid(row=9, column=0)
 
-enterBut = tk.Button(root, text="Generate")
+enterBut = tk.Button(root, text="Generate", command=enterEvent)
 enterBut.grid(row=10, column=0)
 
 #Start mainloop
