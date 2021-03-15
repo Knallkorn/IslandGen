@@ -6,6 +6,7 @@ import noise
 import numpy
 from scipy.misc import toimage
 import math
+import sys
 
 random.seed(os.urandom(6))
 
@@ -34,14 +35,22 @@ snowCol = [245, 254, 255]
 
 #Control Variables
 
-gridSize = 1000 #Side length
+a = sys.argv
 
-scale = 250.0
-octaves = 6
-persistance = 0.5
-lacunarity = 2.0
-
-thres = 0.08
+if len(a) > 1:
+    gridSize = int(a[1])
+    scale = float(a[2])
+    octaves = int(a[3])
+    persistance = float(a[4])
+    lacunarity = float(a[5])
+    thres = float(a[6])
+else:
+    gridSize = 1000 #Side length
+    scale = 250.0
+    octaves = 6
+    persistance = 0.5
+    lacunarity = 2.0
+    thres = 0.08
 
 #Create circular gradient
 
