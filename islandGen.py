@@ -10,6 +10,34 @@ import sys
 
 random.seed(os.urandom(6))
 
+#Colours
+
+dwaterCol = [54, 137, 245]
+waterCol = [67, 146, 245]
+dsandCol = [224, 214, 164]
+sandCol = [247, 232, 176]
+rockCol = [209, 209, 209]
+grassCol = [37, 170, 77]
+dgrassCol = [34, 161, 63]
+treeCol = [10, 122, 42]
+mountCol = [74, 62, 36]
+mountRockCol = [56, 48, 30]
+snowCol = [245, 254, 255]
+
+#OpenGL Colours
+
+dwaterColf = [x / 255 for x in dwaterCol]
+waterColf = [x / 255 for x in waterCol]
+dsandColf = [x / 255 for x in dsandCol]
+sandColf = [x / 255 for x in sandCol]
+rockColf = [x / 255 for x in rockCol]
+grassColf = [x / 255 for x in grassCol]
+dgrassColf = [x / 255 for x in dgrassCol]
+treeColf = [x / 255 for x in treeCol]
+mountColf = [x / 255 for x in mountCol]
+mountRockColf = [x / 255 for x in mountRockCol]
+snowColf = [x / 255 for x in snowCol]
+
 #OpenGL testing
 
 from OpenGL import *
@@ -17,12 +45,14 @@ from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 
-def square():
+def square(x,y,size,col):
     glBegin(GL_QUADS)
-    glVertex2f(100,100)
-    glVertex2f(200,100)
-    glVertex2f(200,200)
-    glVertex2f(100,200)
+    glColor3f(sandColf[0],sandColf[1],sandColf[2])
+    glVertex2f(x,y)
+    glVertex2f(x+size,y)
+    glVertex2f(x+size,y+size)
+    glVertex2f(x,y+size)
+    glColor3f(0.0,0.0,0.0)
     glEnd()
 
 def iterate():
@@ -37,8 +67,7 @@ def showScreen():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) # Remove everything from screen (i.e. displays all white)
     glLoadIdentity()
     iterate()
-    glColor3f(1.0,0.0,3.0)
-    square()
+    square(100,100,100,waterColf)
     glutSwapBuffers()
 
 glutInit() # Initialize a glut instance which will allow us to customize our window
@@ -58,20 +87,6 @@ def percentChance(chance):
         return(True)
     else:
         return(False)
-
-#Colours
-
-dwaterCol = [54, 137, 245]
-waterCol = [67, 146, 245]
-dsandCol = [224, 214, 164]
-sandCol = [247, 232, 176]
-rockCol = [209, 209, 209]
-grassCol = [37, 170, 77]
-dgrassCol = [34, 161, 63]
-treeCol = [10, 122, 42]
-mountCol = [74, 62, 36]
-mountRockCol = [56, 48, 30]
-snowCol = [245, 254, 255]
 
 #Control Variables
 
