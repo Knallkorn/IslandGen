@@ -45,7 +45,7 @@ if len(a) > 1:
     lacunarity = float(a[5])
     thres = float(a[6])
 else:
-    gridSize = 1000 #Side length
+    gridSize = 1024 #Side length
     scale = 250.0
     octaves = 6
     persistance = 0.5

@@ -31,8 +31,8 @@ root.title("Island Generator")
 
 #Add sliders and button
 
-sizeScale = tk.Scale(root, from_=100, to=2000, orient=tk.HORIZONTAL, length=150)
-sizeScale.set(1000)
+sizeScale = tk.Scale(root, from_=100, to=2000, orient=tk.HORIZONTAL, length=150, resolution=16)
+sizeScale.set(1024)
 sizeScale.grid(row=1, column=0)
 
 scaleScale = tk.Scale(root, from_=50.0, to=500.0, orient=tk.HORIZONTAL, length=150)
