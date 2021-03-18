@@ -8,6 +8,8 @@ from scipy.misc import toimage
 import math
 import sys
 
+import chunks.py as chk
+
 random.seed(os.urandom(6))
 
 #Functions
