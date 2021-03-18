@@ -60,12 +60,12 @@ enterBut.grid(row=12, column=0)
 
 #Labels
 
-sizeLabel = tk.Label(root, text="Island Size").grid(row=0, column=0)
-scaleLabel = tk.Label(root, text="Noise Scale").grid(row=2, column=0)
-octavesLabel = tk.Label(root, text="Noise Octaves").grid(row=4, column=0)
-persistanceLabel = tk.Label(root, text="Noise Persistance").grid(row=6, column=0)
-lacunarityLabel = tk.Label(root, text="Noise Lacunarity").grid(row=8, column=0)
-thresLabel = tk.Label(root, text="Island Generation Threshold").grid(row=10, column=0)
+tk.Label(root, text="Island Size").grid(row=0, column=0)
+tk.Label(root, text="Noise Scale").grid(row=2, column=0)
+tk.Label(root, text="Noise Octaves").grid(row=4, column=0)
+tk.Label(root, text="Noise Persistance").grid(row=6, column=0)
+tk.Label(root, text="Noise Lacunarity").grid(row=8, column=0)
+tk.Label(root, text="Island Generation Threshold").grid(row=10, column=0)
 
 #Start mainloop
 

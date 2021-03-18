@@ -45,3 +45,13 @@ class Chunks:
             c.close()
         else:
             raise Exception("No chunk at provided co-ords")
+
+    @staticmethod
+    def readChunkArray(size,inp):
+        opt = zeros((size,size)+(3,))
+        for cy in range(size//16):
+            for cx in range(size//16):
+                for y in range(16):
+                    for x in range(16):
+                        opt[y + (cy * 16)][x + (cx * 16)] = inp[cy][cx][y][x]
+        return opt

@@ -8,6 +8,7 @@ import math
 import sys
 import chunks as chk
 from scipy.misc import toimage
+import PIL
 
 random.seed(os.urandom(6))
 
@@ -93,6 +94,8 @@ for y in range(gridSize):
         if mainNoise[y][x] > 0:
             mainNoise[y][x] *= 20 #Amplify
 
+del main
+del circle_grad
 max_grad = numpy.max(mainNoise)
 mainNoise = mainNoise / max_grad #Weird even out math thing
 
@@ -130,7 +133,7 @@ for cy in range(gridSize//16):
                     passOver[cy][cx] = True
                 display[cy][cx][y][x] = m
 
-toimage(display).show()
+toimage(chk.Chunks.readChunkArray(gridSize,display)).show()
 
 """
 for y in range(0,gridSize):
