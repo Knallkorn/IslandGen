@@ -1,36 +1,30 @@
-import os, sys
+#Import necesary libraries
+
+import os
 from pathlib import Path
 from numpy import zeros
 
-p = str(Path(__file__).parent.absolute())
+p = str(Path(__file__).parent.absolute()) #Set working dir
 os.chdir(p)
 
-if os.path.exists("world/0_0.chunk"):
-    os.remove("world/0_0.chunk")
+filelist = [ f for f in os.listdir("world/") if f.endswith(".chunk") ] #Delete previous world files
+for f in filelist:
+    os.remove(os.path.join("world/", f))
 
-c = open("world/0_0.chunk", "w")
-for y in range(16):
-    for x in range(16):
-        c.write("0,0,0|")
-    c.write("\n")
-c.close()
-
-class chunks:
-
-    def __init__
+class Chunks:
 
     #Read chunk
     @staticmethod
-    def readChunk(cx,cy):
-        p = "world/" + str(cx) + "_" + str(cy) + ".chunk"
+    def readChunk(cx,cy): #Chunk x, chunk y
+        p = "world/" + str(cx) + "_" + str(cy) + ".chunk" #Check if valid coord
         if os.path.exists(p):
-            c = open(p, "r")
+            c = open(p, "r") #Open file and init chunk array
             chunk = zeros((16,16)+(3,))
             for y in range(16):
-                l = c.readline()
+                l = c.readline() #Read all x for y and split by |
                 ls = l.split("|")
                 for x in range(16):
-                    chunk[y][x] = ls[x].split(',')
+                    chunk[y][x] = ls[x].split(',') #Input list values split by , into chunk array
             c.close()
             return chunk
         else:
@@ -38,14 +32,16 @@ class chunks:
 
     #Write chunk
     @staticmethod
-    def writeChunk(cx,cy,inp):
-        p = "world/" + str(cx) + "_" + str(cy) + ".chunk"
+    def writeChunk(cx,cy,inp): #Chunk x, chunk y, input chunk
+        p = "world/" + str(cx) + "_" + str(cy) + ".chunk" #Check if valid coords
         if os.path.exists(p):
-            chunk = ""
+            chunk = "" #Init main string
             for y in range(16):
                 for x in range(16):
-                    chunk = chunk + str(inp[y][x][0]) + "," + str(inp[y][x][1]) + "," + str(inp[y][x][2]) + "|"
-                chunk += "\n"
-            c = open(p, "w")
+                    chunk = chunk + str(inp[y][x][0]) + "," + str(inp[y][x][1]) + "," + str(inp[y][x][2]) + "|" #Add values of input to string
+                chunk += "\n" #Once all x for y is in, new line
+            c = open(p, "w") #Write
             c.write(chunk)
             c.close()
+        else:
+            raise Exception("No chunk at provided co-ords")
