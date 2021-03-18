@@ -99,7 +99,7 @@ seed = random.randint(0,200) #Gen seed
 for y in range(gridSize):
     for x in range(gridSize):
         main[y][x] = noise.pnoise2(y/scale,x/scale,octaves=octaves,persistence=persistance,lacunarity=lacunarity,repeatx=gridSize,repeaty=gridSize,base=seed) #Set noise
-        mainNoise[y][x] = (main[y][x] * mapVal(circle_grad.getpixel((x,y)), 0, 255, -0.05, 1)) #Apply gradient to noise
+        mainNoise[y][x] = (main[y][x] * mapVal(circle_grad.getpixel((round((1024/gridSize)*x),round((1024/gridSize)*y))), 0, 255, -0.05, 1)) #Apply gradient to noise
         if mainNoise[y][x] > 0:
             mainNoise[y][x] *= 20 #Amplify
 
