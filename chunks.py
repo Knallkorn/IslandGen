@@ -45,8 +45,7 @@ class Chunks:
             c.close()
         else:
             raise Exception("No chunk at provided co-ords")
-    
-    #Read 5D chunk array
+
     @staticmethod
     def readChunkArray(size,inp):
         opt = zeros((size,size)+(3,))

@@ -8,7 +8,7 @@ import math
 import sys
 import chunks as chk
 from scipy.misc import toimage
-from PIL import Image
+import PIL
 
 random.seed(os.urandom(6))
 
@@ -80,34 +80,6 @@ for y in range(gridSize): #More weird math, I think its just amplifying anything
 max_grad = numpy.max(circle_grad)
 circle_grad = circle_grad / max_grad #For some reason it's lowered again
 
-
-numpy.set_printoptions(threshold=sys.maxsize)
-w = open("gradient/circle.gradient", "w")
-ah = numpy.array2string(circle_grad, sys.maxsize, 2)
-w.write(ah)
-w.close()
-
-"""
-circle_grad = circle_grad = numpy.zeros((gridSize,gridSize))
-f = open("gradient/circle.gradient")
-for l in range(1024):
-    s = f.readline().split(" ")
-    for n in range(len(s)):
-        s[n] = float(s[n])
-    circle_grad[l] = s
-f.close()
-"""
-
-f = open("gradient/circle.gradient", "r")
-s = f.read()
-s = s.replace("[","")
-s = s.replace("]","")
-s = s.replace("\n ","\n")
-f.close()
-f = open("gradient/circle.gradient", "w")
-f.write(s)
-f.close()
-
 #Generate base noise, Apply gradient
 
 main = numpy.zeros((gridSize,gridSize)) #Init arrays
@@ -122,6 +94,8 @@ for y in range(gridSize):
         if mainNoise[y][x] > 0:
             mainNoise[y][x] *= 20 #Amplify
 
+del main
+del circle_grad
 max_grad = numpy.max(mainNoise)
 mainNoise = mainNoise / max_grad #Weird even out math thing
 
