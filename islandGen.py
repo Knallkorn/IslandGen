@@ -8,7 +8,7 @@ import math
 import sys
 import chunks as chk
 from scipy.misc import toimage
-import PIL
+from PIL import Image
 
 random.seed(os.urandom(6))
 
@@ -20,6 +20,9 @@ def percentChance(chance):
         return(True)
     else:
         return(False)
+
+def mapVal(inp, inpMin, inpMax, outMin, outMax):
+    return (inp - inpMin) * (outMax - outMin) / (inpMax - inpMin) + outMin
 
 #Colours
 
@@ -53,8 +56,8 @@ else:
     persistance = 0.5
     lacunarity = 2.0
     thres = 0.08
-
-#Create circular gradient
+"""
+#Create circular gradient (Obsolete)
 
 center_x, center_y = gridSize // 2, gridSize // 2 #Define centre
 circle_grad = numpy.zeros((gridSize,gridSize)) #Create array
@@ -79,8 +82,11 @@ for y in range(gridSize): #More weird math, I think its just amplifying anything
 
 max_grad = numpy.max(circle_grad)
 circle_grad = circle_grad / max_grad #For some reason it's lowered again
-
+"""
 #Generate base noise, Apply gradient
+
+im = Image.open("gradient/circle_grad.png")
+circle_grad = im.convert("L")
 
 main = numpy.zeros((gridSize,gridSize)) #Init arrays
 mainNoise = numpy.zeros_like(main)
@@ -90,12 +96,10 @@ seed = random.randint(0,200) #Gen seed
 for y in range(gridSize):
     for x in range(gridSize):
         main[y][x] = noise.pnoise2(y/scale,x/scale,octaves=octaves,persistence=persistance,lacunarity=lacunarity,repeatx=gridSize,repeaty=gridSize,base=seed) #Set noise
-        mainNoise[y][x] = (main[y][x] * circle_grad[y][x]) #Apply gradient to noise
+        mainNoise[y][x] = (main[y][x] * mapVal(circle_grad.getpixel((x,y)), 0, 255, -0.05, 1)) #Apply gradient to noise
         if mainNoise[y][x] > 0:
             mainNoise[y][x] *= 20 #Amplify
 
-del main
-del circle_grad
 max_grad = numpy.max(mainNoise)
 mainNoise = mainNoise / max_grad #Weird even out math thing
 
