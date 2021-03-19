@@ -34,17 +34,14 @@ class Chunks:
     @staticmethod
     def writeChunk(cx,cy,inp): #Chunk x, chunk y, input chunk
         p = "world/" + str(cx) + "_" + str(cy) + ".chunk" #Check if valid coords
-        if os.path.exists(p):
-            chunk = "" #Init main string
-            for y in range(16):
-                for x in range(16):
-                    chunk = chunk + str(inp[y][x][0]) + "," + str(inp[y][x][1]) + "," + str(inp[y][x][2]) + "|" #Add values of input to string
-                chunk += "\n" #Once all x for y is in, new line
-            c = open(p, "w") #Write
-            c.write(chunk)
-            c.close()
-        else:
-            raise Exception("No chunk at provided co-ords")
+        chunk = "" #Init main string
+        for y in range(16):
+            for x in range(16):
+                chunk = chunk + str(inp[y][x][0]) + "," + str(inp[y][x][1]) + "," + str(inp[y][x][2]) + "|" #Add values of input to string
+            chunk += "\n" #Once all x for y is in, new line
+        c = open(p, "w") #Write
+        c.write(chunk)
+        c.close()
 
     #Unpack and read 5D array
     @staticmethod

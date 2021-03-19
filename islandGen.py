@@ -6,9 +6,10 @@ import noise
 import numpy
 import math
 import sys
-import chunks as chk
-from scipy.misc import toimage
+from chunks import Chunks as chk
 from PIL import Image
+import subprocess
+from scipy.misc import toimage
 
 random.seed(os.urandom(6))
 
@@ -206,4 +207,12 @@ for cy in range(gridSize//16):
                         if percentChance(0.01) == True:
                             addRock(display,cx,cy,x,y,structScale,mountRockCol)
 
-toimage(chk.Chunks.readChunkArray(gridSize,display)).show()
+#Write to chunks
+
+for cy in range(gridSize//16):
+    for cx in range(gridSize//16):
+        chk.writeChunk(cx,cy,display[cy][cx])
+
+#Start main
+
+toimage(chk.readChunkArray(gridSize,display)).show()

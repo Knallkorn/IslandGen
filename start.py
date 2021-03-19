@@ -14,7 +14,7 @@ global thres
 
 #Define events
 
-def enterEvent():
+def generateEvent():
     size = str(sizeScale.get())
     scale = str(scaleScale.get())
     octaves = str(octavesScale.get())
@@ -55,8 +55,8 @@ thresScale = tk.Scale(root, from_=0.0, to=1.0, orient=tk.HORIZONTAL, length=150,
 thresScale.set(0.08)
 thresScale.grid(row=11, column=0)
 
-enterBut = tk.Button(root, text="Generate", command=enterEvent)
-enterBut.grid(row=12, column=0)
+generateBut = tk.Button(root, text="Generate", command=enterEvent)
+generateBut.grid(row=12, column=0)
 
 #Labels
 
