@@ -207,12 +207,6 @@ for cy in range(gridSize//16):
                         if percentChance(0.01) == True:
                             addRock(display,cx,cy,x,y,structScale,mountRockCol)
 
-#Write to chunks
-
-for cy in range(gridSize//16):
-    for cx in range(gridSize//16):
-        chk.writeChunk(cx,cy,display[cy][cx])
-
 #Start main
 
 toimage(chk.readChunkArray(gridSize,display)).show()

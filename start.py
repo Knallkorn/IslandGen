@@ -55,7 +55,7 @@ thresScale = tk.Scale(root, from_=0.0, to=1.0, orient=tk.HORIZONTAL, length=150,
 thresScale.set(0.08)
 thresScale.grid(row=11, column=0)
 
-generateBut = tk.Button(root, text="Generate", command=enterEvent)
+generateBut = tk.Button(root, text="Generate", command=generateEvent)
 generateBut.grid(row=12, column=0)
 
 #Labels
