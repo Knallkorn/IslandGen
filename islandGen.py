@@ -10,6 +10,7 @@ from chunks import Chunks as chk
 from PIL import Image
 import subprocess
 from scipy.misc import toimage
+import threading
 
 random.seed(os.urandom(6))
 
@@ -110,36 +111,42 @@ mainNoise = mainNoise / max_grad #Weird even out math thing
 #Lay base
 
 display = numpy.zeros((gridSize//16,gridSize//16)+(16,16)+(3,))
-passOver = [[False] * (gridSize)] * (gridSize//16)
+processed = numpy.zeros((gridSize//16,gridSize//16), dtype=bool)
+passOver = numpy.zeros((gridSize//16,gridSize//16), dtype=bool)
 
-for cy in range(gridSize//16):
-    for cx in range(gridSize//16):
-        for y in range(16):
-            for x in range(16):
-                m = mainNoise[y + (16*cy)][x + (16*cx)] #Set iterator to value of main array and check if meets certain thresholds to set colours
-                if m < thres + 0.015:
-                    m = dwaterCol
-                elif m < thres + 0.11:
-                    m = waterCol
-                elif m < thres + 0.12:
-                    m = dsandCol
-                    passOver[cy][cx] = True
-                elif m < thres + 0.15:
-                    m = sandCol
-                    passOver[cy][cx] = True
-                elif m < thres + 0.28:
-                    m = grassCol
-                    passOver[cy][cx] = True
-                elif m < thres + 0.46:
-                    m = dgrassCol
-                    passOver[cy][cx] = True
-                elif m < thres + 0.78:
-                    m = mountCol
-                    passOver[cy][cx] = True
-                elif m < thres + 1.0:
-                    m = snowCol
-                    passOver[cy][cx] = True
-                display[cy][cx][y][x] = m
+def layBase(mainNoise,display,passOver,processed):
+    for cy in range(gridSize//16):
+        for cx in range(gridSize//16):
+            if processed[cy][cx] == False:
+                processed[cy][cx] = True
+                for y in range(16):
+                    for x in range(16):
+                        m = mainNoise[y + (16*cy)][x + (16*cx)] #Set iterator to value of main array and check if meets certain thresholds to set colours
+                        if m < thres + 0.015:
+                            m = dwaterCol
+                        elif m < thres + 0.11:
+                            m = waterCol
+                        elif m < thres + 0.12:
+                            m = dsandCol
+                            passOver[cy][cx] = True
+                        elif m < thres + 0.15:
+                            m = sandCol
+                            passOver[cy][cx] = True
+                        elif m < thres + 0.28:
+                            m = grassCol
+                            passOver[cy][cx] = True
+                        elif m < thres + 0.46:
+                            m = dgrassCol
+                            passOver[cy][cx] = True
+                        elif m < thres + 0.78:
+                            m = mountCol
+                            passOver[cy][cx] = True
+                        elif m < thres + 1.0:
+                            m = snowCol
+                            passOver[cy][cx] = True
+                        display[cy][cx][y][x] = m
+
+layBase(mainNoise,display,passOver,processed)
 
 #Second pass (Natural features)
 
