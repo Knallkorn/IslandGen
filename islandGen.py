@@ -117,6 +117,7 @@ passOver = numpy.zeros((gridSize//16,gridSize//16), dtype=bool)
 def layBase(mainNoise,display,passOver,processed):
     for cy in range(gridSize//16):
         for cx in range(gridSize//16):
+            print(str(cy) + " " + str(cx))
             if processed[cy][cx] == False:
                 processed[cy][cx] = True
                 for y in range(16):
@@ -145,8 +146,18 @@ def layBase(mainNoise,display,passOver,processed):
                             m = snowCol
                             passOver[cy][cx] = True
                         display[cy][cx][y][x] = m
-
-layBase(mainNoise,display,passOver,processed)
+import time
+start = time.time()
+thread1 = threading.Thread(target=layBase, args=(mainNoise,display,passOver,processed))
+#thread2 = threading.Thread(target=layBase, args=(mainNoise,display,passOver,processed))
+#thread3 = threading.Thread(target=layBase, args=(mainNoise,display,passOver,processed))
+thread1.start()
+#thread2.start()
+#thread3.start()
+thread1.join()
+#thread2.join()
+#thread3.join()
+print(time.time() - start)
 
 #Second pass (Natural features)
 
