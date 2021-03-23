@@ -114,100 +114,40 @@ display = numpy.zeros((gridSize//16,gridSize//16)+(16,16)+(3,))
 processed = numpy.zeros((gridSize//16,gridSize//16), dtype=bool)
 passOver = numpy.zeros((gridSize//16,gridSize//16), dtype=bool)
 
-"""
-def layBase(mainNoise,display,passOver,processed):
-    for cy in range(gridSize//16):
-        for cx in range(gridSize//16):
-            print(str(cy) + " " + str(cx))
-            if processed[cy][cx] == False:
-                processed[cy][cx] = True
-                for y in range(16):
-                    for x in range(16):
-                        m = mainNoise[y + (16*cy)][x + (16*cx)] #Set iterator to value of main array and check if meets certain thresholds to set colours
-                        if m < thres + 0.015:
-                            m = dwaterCol
-                        elif m < thres + 0.11:
-                            m = waterCol
-                        elif m < thres + 0.12:
-                            m = dsandCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.15:
-                            m = sandCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.28:
-                            m = grassCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.46:
-                            m = dgrassCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.78:
-                            m = mountCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 1.0:
-                            m = snowCol
-                            passOver[cy][cx] = True
-                        display[cy][cx][y][x] = m
-"""
-
 import time
 start = time.time()
 
-def layBase(mainNoise,display,passOver,processed):
-    for cy in range(gridSize//16):
-        for cx in range(gridSize//16):
-            print(str(cy) + " " + str(cx))
-            if processed[cy][cx] == False:
-                processed[cy][cx] = True
-                for y in range(16):
-                    for x in range(16):
-                        m = mainNoise[y + (16*cy)][x + (16*cx)] #Set iterator to value of main array and check if meets certain thresholds to set colours
-                        if m < thres + 0.015:
-                            m = dwaterCol
-                        elif m < thres + 0.11:
-                            m = waterCol
-                        elif m < thres + 0.12:
-                            m = dsandCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.15:
-                            m = sandCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.28:
-                            m = grassCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.46:
-                            m = dgrassCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 0.78:
-                            m = mountCol
-                            passOver[cy][cx] = True
-                        elif m < thres + 1.0:
-                            m = snowCol
-                            passOver[cy][cx] = True
-                        display[cy][cx][y][x] = m
-
-"""
-thread = []
-for n in range(3):
-    thread.append(threading.Thread(target=layBase, args=(mainNoise,display,passOver,processed)))
-    thread[n].start()
-for n in range(len(thread)):
-    thread[n].join()
-"""
-
-"""
-thread1 = threading.Thread(target=layBase, args=(mainNoise,display,passOver,processed))
-thread2 = threading.Thread(target=layBase, args=(mainNoise,display,passOver,processed))
-thread3 = threading.Thread(target=layBase, args=(mainNoise,display,passOver,processed))
-thread1.start()
-thread2.start()
-thread3.start()
-thread1.join()
-thread2.join()
-thread3.join()
-"""
-
-layBase(mainNoise,display,passOver,processed)
-print(time.time() - start)
+for cy in range(gridSize//16):
+    for cx in range(gridSize//16):
+        print(str(cy) + " " + str(cx))
+        if processed[cy][cx] == False:
+            processed[cy][cx] = True
+            for y in range(16):
+                for x in range(16):
+                    m = mainNoise[y + (16*cy)][x + (16*cx)] #Set iterator to value of main array and check if meets certain thresholds to set colours
+                    if m < thres + 0.015:
+                        m = dwaterCol
+                    elif m < thres + 0.11:
+                        m = waterCol
+                    elif m < thres + 0.12:
+                        m = dsandCol
+                        passOver[cy][cx] = True
+                    elif m < thres + 0.15:
+                        m = sandCol
+                        passOver[cy][cx] = True
+                    elif m < thres + 0.28:
+                        m = grassCol
+                        passOver[cy][cx] = True
+                    elif m < thres + 0.46:
+                        m = dgrassCol
+                        passOver[cy][cx] = True
+                    elif m < thres + 0.78:
+                        m = mountCol
+                        passOver[cy][cx] = True
+                    elif m < thres + 1.0:
+                        m = snowCol
+                        passOver[cy][cx] = True
+                    display[cy][cx][y][x] = m
 
 #Second pass (Natural features)
 
@@ -275,6 +215,12 @@ for cy in range(gridSize//16):
                         if percentChance(0.01) == True:
                             addRock(display,cx,cy,x,y,structScale,mountRockCol)
 
-#Start main
+#Save
+
+for cy in range(gridSize//16):
+    for cx in range(gridSize//16):
+        chk.writeChunk(cx,cy,display)
+
+#Display
 
 toimage(chk.readChunkArray(gridSize,display)).show()
