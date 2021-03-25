@@ -11,7 +11,7 @@ class Chunks:
 
     #Read chunk
     @staticmethod
-    def readChunk(cx,cy): #Chunk x, chunk y
+    def readChunk(cx,cy): #Chunk x, chunk y ||| returns 16x16 array of rgb lists
         p = "world/" + str(cx) + "_" + str(cy) + ".chunk" #Check if valid coord
         if os.path.exists(p):
             c = open(p, "r") #Open file and init chunk array
@@ -41,7 +41,7 @@ class Chunks:
 
     #Unpack and read 5D array
     @staticmethod
-    def readChunkArray(size,inp):
+    def readChunkArray(size,inp): #Size in pixels of input, input array
         opt = zeros((size,size)+(3,))
         for cy in range(size//16):
             for cx in range(size//16):

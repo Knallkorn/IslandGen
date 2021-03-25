@@ -1,3 +1,7 @@
+#INFO
+#This is really janky and stuc together, all the elements in the generation menu have to be global
+#because the event that passes them into the islandgen script cant get their values otherwise
+
 #Import libraries
 
 import tkinter as tk
@@ -17,6 +21,16 @@ global lacunarity
 global thres
 
 #Define events
+
+def generateEvent(): #Event for button in generation window
+    size = str(sizeScale.get())
+    scale = str(scaleScale.get())
+    octaves = str(octavesScale.get())
+    persistance = str(persistanceScale.get())
+    lacunarity = str(lacunarityScale.get())
+    thres = str(thresScale.get())
+    subprocess.run(["python", "islandGen.py", size, scale, octaves, persistance, lacunarity, thres])
+    root.destroy()
 
 def generateWindow():
 
@@ -77,16 +91,6 @@ def generateWindow():
     #Start mainloop
 
     root.mainloop()
-
-def generateEvent():
-    size = str(sizeScale.get())
-    scale = str(scaleScale.get())
-    octaves = str(octavesScale.get())
-    persistance = str(persistanceScale.get())
-    lacunarity = str(lacunarityScale.get())
-    thres = str(thresScale.get())
-    subprocess.run(["python", "islandGen.py", size, scale, octaves, persistance, lacunarity, thres])
-    root.destroy()
 
 def loadWindow():
 
