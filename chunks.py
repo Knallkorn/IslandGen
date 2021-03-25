@@ -7,10 +7,6 @@ from numpy import zeros
 p = str(Path(__file__).parent.absolute()) #Set working dir
 os.chdir(p)
 
-filelist = [ f for f in os.listdir("world/") if f.endswith(".chunk") ] #Delete previous world files
-for f in filelist:
-    os.remove(os.path.join("world/", f))
-
 class Chunks:
 
     #Read chunk
@@ -33,11 +29,11 @@ class Chunks:
     #Write chunk
     @staticmethod
     def writeChunk(cx,cy,inp): #Chunk x, chunk y, input chunk
-        p = "world/" + str(cx) + "_" + str(cy) + ".chunk" #Check if valid coords
+        p = "world/" + str(cx) + "_" + str(cy) + ".chunk"
         chunk = "" #Init main string
         for y in range(16):
             for x in range(16):
-                chunk = chunk + str(inp[y][x][0]) + "," + str(inp[y][x][1]) + "," + str(inp[y][x][2]) + "|" #Add values of input to string
+                chunk = chunk + str(inp[cy][cx][y][x][0]) + "," + str(inp[cy][cx][y][x][1]) + "," + str(inp[cy][cx][y][x][2]) + "|" #Add values of input to string
             chunk += "\n" #Once all x for y is in, new line
         c = open(p, "w") #Write
         c.write(chunk)

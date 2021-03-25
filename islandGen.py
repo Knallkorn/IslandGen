@@ -14,6 +14,12 @@ import threading
 
 random.seed(os.urandom(6))
 
+#Delete old chunks
+
+filelist = [ f for f in os.listdir("world/") if f.endswith(".chunk") ] #Delete previous world files
+for f in filelist:
+    os.remove(os.path.join("world/", f))
+
 #Functions
 
 def percentChance(chance):
