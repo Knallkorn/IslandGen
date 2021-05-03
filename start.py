@@ -34,10 +34,6 @@ def generateEvent(): #Event for button in generation window
 
 def generateWindow():
 
-    #Kill old window
-
-    start.destroy()
-
     #Init window
 
     global root
